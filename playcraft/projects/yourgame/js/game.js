@@ -22,7 +22,7 @@ TheGame = pc.Game.extend('TheGame', //you can access this game instance anywhere
             //if (pc.device.soundEnabled)
             //   pc.device.loader.add(new pc.Sound('fire', 'sounds/fire', ['ogg', 'mp3'], 15));
 
-            // fire up the loader
+            //this is where we would load up all of our resources(images,textures, ect)
             
             //bind() method makes it so this refers to the correct global object TheGame
             pc.device.loader.start(this.onLoading.bind(this), this.onLoaded.bind(this));
