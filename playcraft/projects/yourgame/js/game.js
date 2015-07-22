@@ -2,15 +2,15 @@
  * A sample game.js for you to work from
  */
 
-TheGame = pc.Game.extend('TheGame',
-    { },
-    {
+TheGame = pc.Game.extend('TheGame', //you can access this game instance anywhere using global pc.device.game
+    { }, //statics go in here. statics apply to all instances (objects) of a class
+    { //instances go in here
         gameScene:null,
         menuScene:null,
 
         onReady:function ()
         {
-            this._super();
+            this._super();//calls the Game class' onReady() method
 
             // disable caching when developing
             // if (pc.device.devMode)
@@ -23,6 +23,8 @@ TheGame = pc.Game.extend('TheGame',
             //   pc.device.loader.add(new pc.Sound('fire', 'sounds/fire', ['ogg', 'mp3'], 15));
 
             // fire up the loader
+            
+            //bind() method makes it so this refers to the correct global object TheGame
             pc.device.loader.start(this.onLoading.bind(this), this.onLoaded.bind(this));
         },
 
@@ -31,7 +33,7 @@ TheGame = pc.Game.extend('TheGame',
             // draw title screen -- with loading bar
         },
 
-        onLoaded:function ()
+        onLoaded:function()//called immediately after onLoading finishes
         {
             // create the game scene (notice we do it here AFTER the resources are loaded)
             this.gameScene = new GameScene();
