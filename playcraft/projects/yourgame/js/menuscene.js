@@ -3,7 +3,7 @@
  * A template menu scene
  */
 MenuScene = pc.Scene.extend('MenuScene',
-    { },
+    { },//statics here
     {
         menuLayer:null,
         menuItems:null,
@@ -21,11 +21,11 @@ MenuScene = pc.Scene.extend('MenuScene',
             //-----------------------------------------------------------------------------
             this.menuLayer = this.addLayer(new pc.EntityLayer('menu layer', 10000, 10000));
 
-            // render system to draw text etc
+            // render system to draw text, etc
             this.menuLayer.addSystem(new pc.systems.Render());
             // we use the scale effect to show which item is highlighted
             this.menuLayer.addSystem(new pc.systems.Effects());
-            // and the layout system to automatically arrange the menu items on the side of the screen
+            // add the layout system to automatically arrange the menu items on the side of the screen
             this.menuLayer.addSystem(new pc.systems.Layout());
 
             // handle input
@@ -36,7 +36,7 @@ MenuScene = pc.Scene.extend('MenuScene',
             title.addComponent(pc.components.Spatial.create({ w:200, h:50 }));
             title.addComponent(pc.components.Layout.create({ vertical:'middle', horizontal:'left', margin:{ left:40, bottom:50 }}));
             title.addComponent(pc.components.Text.create({ fontHeight:40, lineWidth:1, strokeColor:'#ffffff', color:'#222288', text:['Menu!'] }));
-
+//#ffffff is equal to white, #222288 is equal to 13.3% red, 13.3% green and 40% blue
             // menu
             var menuItemText = ["Continue", "Menu Item 1", "Menu Item 2"];
             this.menuItems = [];
@@ -47,12 +47,16 @@ MenuScene = pc.Scene.extend('MenuScene',
 
                 // notice the layout component doesn't have an x, y (that's because positioning is taken care of
                 // by the layout system/component)
-                menuItem.addComponent(pc.components.Spatial.create({ w:200, h:40 }));
-                menuItem.addComponent(pc.components.Alpha.create({}));
+                menuItem.addComponent(pc.components.Spatial.create({ w:200, h:40 }));//width and height of the three menu items
+                menuItem.addComponent(pc.components.Alpha.create({}));//alpha component changes the alpha drawing of an associated drawable object (sprite, shape, text etc)
+                //an alpha of zero is fully transparent, 1 less transparent, ect
                 menuItem.addComponent(pc.components.Layout.create({ vertical:'middle', horizontal:'left', margin:{left:50 }}));
                 menuItem.addComponent(pc.components.Text.create({ fontHeight:30, text: [menuItemText[i]] }));
 
-                var fader = pc.components.Fade.create({ fadeInTime:500, fadeOutTime:500, loops:0 });
+                var fader = pc.components.Fade.create({ fadeInTime:500, fadeOutTime:500, loops:0 });//Adds fade effects to the entity, no shit
+                //the third parameter is the number of times it should fade. Since loops is equal to zero, the entity fades an infinite amount of times
+                //fadeInTime,fadeOutTime,and loops could all be named someting else, as there are no specific names, they are just generic parameter names
+                //(that make a lot of sense). The fadeInTime and fadeOutTime are measured in milliseconds
                 menuItem.addComponent(fader);
                 fader.active = false;
 
@@ -125,6 +129,7 @@ MenuScene = pc.Scene.extend('MenuScene',
         },
 
         process:function ()
+//Scenes and layers both have a process method, which will be called by the game class on every update cycle        
         {
             // clear the background
             pc.device.ctx.clearRect(0, 0, pc.device.canvasWidth, pc.device.canvasHeight);
